@@ -3,14 +3,16 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-  apiKey: "AIzaSyC_eUXlgVshuChMINeIeRCk_aSdYlK9Iy4",
-  authDomain: "crwn-clothing-4ca63.firebaseapp.com",
-  databaseURL: "https://crwn-clothing-4ca63.firebaseio.com",
-  projectId: "crwn-clothing-4ca63",
-  storageBucket: "crwn-clothing-4ca63.appspot.com",
-  messagingSenderId: "460825595553",
-  appId: "1:460825595553:web:8a218916b0761dd0e16ae0"
-}
+  apiKey: 'AIzaSyC_eUXlgVshuChMINeIeRCk_aSdYlK9Iy4',
+  authDomain: 'crwn-clothing-4ca63.firebaseapp.com',
+  databaseURL: 'https://crwn-clothing-4ca63.firebaseio.com',
+  projectId: 'crwn-clothing-4ca63',
+  storageBucket: 'crwn-clothing-4ca63.appspot.com',
+  messagingSenderId: '460825595553',
+  appId: '1:460825595553:web:8a218916b0761dd0e16ae0',
+};
+
+firebase.initializeApp(config);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
@@ -22,23 +24,20 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-
     try {
       await userRef.set({
         displayName,
         email,
         createdAt,
-        ...additionalData
-      })
+        ...additionalData,
+      });
     } catch (error) {
       console.log('error creating user', error.message);
     }
   }
 
   return userRef;
-}
-
-firebase.initializeApp(config);
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
